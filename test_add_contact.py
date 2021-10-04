@@ -23,11 +23,9 @@ class UntitledTestCase(unittest.TestCase):
         self.logout(wb)
 
     def logout(self, wb):
-        # logout
         wb.find_element_by_link_text("Logout").click()
 
     def return_to_main_page(self, wb):
-        # return to main page
         wb.find_element_by_link_text("home").click()
 
     def create_contact(self, wb):
@@ -87,7 +85,6 @@ class UntitledTestCase(unittest.TestCase):
         wb.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def login(self, wb):
-        # login
         wb.find_element_by_name("user").click()
         wb.find_element_by_name("user").clear()
         wb.find_element_by_name("user").send_keys("admin")
@@ -97,7 +94,6 @@ class UntitledTestCase(unittest.TestCase):
         wb.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_main_page(self, wb):
-        # open main page
         wb.get("http://localhost/addressbook/index.php")
 
     def tearDown(self):
