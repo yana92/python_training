@@ -7,7 +7,7 @@ class UntitledTestCase(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
     
-    def test_untitled_test_case(self):
+    def test_add_group(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
