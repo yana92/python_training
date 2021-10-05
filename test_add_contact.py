@@ -88,13 +88,13 @@ class UntitledTestCase(unittest.TestCase):
         # submit contact creation
         wb.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def login(self, wb):
+    def login(self, wb, user_name="admin", password="secret"):
         wb.find_element_by_name("user").click()
         wb.find_element_by_name("user").clear()
-        wb.find_element_by_name("user").send_keys("admin")
+        wb.find_element_by_name("user").send_keys(user_name)
         wb.find_element_by_name("pass").click()
         wb.find_element_by_name("pass").clear()
-        wb.find_element_by_name("pass").send_keys("secret")
+        wb.find_element_by_name("pass").send_keys(password)
         wb.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_main_page(self, wb):
