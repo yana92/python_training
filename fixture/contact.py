@@ -66,3 +66,12 @@ class ContactHelper:
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
         wd.find_element_by_id("maintable")
+
+    def edit_contacts_firstname(self, contact):
+        wd = self.app.wd
+        wd.find_element_by_xpath('//img[@title="Edit"]').click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys("Test edit Firstname")
+        wd.find_element_by_name("Update")
+        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_id("maintable")
