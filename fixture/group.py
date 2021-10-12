@@ -43,8 +43,7 @@ class GroupHelper:
     def edit_group_name(self):
         wd = self.app.wd
         self.open_groups_page()
-        # select first group
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_group(wd)
         # go to the edit form
         wd.find_element_by_name("edit").click()
         # rename group name
@@ -53,3 +52,7 @@ class GroupHelper:
         # update group name
         wd.find_element_by_name("update")
         self.return_to_groups_page()
+
+    def select_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
