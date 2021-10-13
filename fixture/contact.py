@@ -67,12 +67,12 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         wd.find_element_by_id("maintable")
 
-    def edit_firstname(self, contact):
+    def edit_firstname(self):
         wd = self.app.wd
         wd.find_element_by_xpath('//img[@title="Edit"]').click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("Test edit Firstname")
-        wd.find_element_by_name("Update")
+        wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
         #waiting for the table with contacts
         wd.find_element_by_id("maintable")
