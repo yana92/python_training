@@ -5,6 +5,7 @@ class ContactHelper:
 
     def create_contact(self, contact):
         wd = self.app.wd
+        self.open_home_page()
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact info
@@ -41,16 +42,25 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
+        self.waiting_contacts_table()
+
+    def waiting_contacts_table(self):
+        wd = self.app.wd
         wd.find_element_by_id("maintable")
+
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
 
     def edit_firstname(self, new_contact_data):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_xpath('//img[@title="Edit"]').click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
-        #waiting for the table with contacts
-        wd.find_element_by_id("maintable")
+        self.waiting_contacts_table()
