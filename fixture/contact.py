@@ -54,7 +54,8 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/index.php")):
+            wd.find_element_by_link_text("home").click()
 
     def edit_firstname(self, new_contact_data):
         wd = self.app.wd
