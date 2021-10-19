@@ -49,7 +49,8 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
-        self.waiting_contacts_table()
+#        self.waiting_contacts_table()
+        self.open_home_page()
 
     def waiting_contacts_table(self):
         wd = self.app.wd
@@ -57,8 +58,8 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("/index.php")):
-            wd.find_element_by_link_text("home").click()
+#        if not (wd.current_url.endswith("/index.php")):
+        wd.find_element_by_link_text("home").click()
 
     def edit_firstname(self, new_contact_data):
         wd = self.app.wd
