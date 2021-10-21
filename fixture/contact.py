@@ -44,10 +44,10 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def delete_first_contact(self):
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
 #        self.waiting_contacts_table()
@@ -63,10 +63,10 @@ class ContactHelper:
 #        if not (wd.current_url.endswith("/index.php")):
         wd.find_element_by_link_text("home").click()
 
-    def edit_firstname(self, new_contact_data):
+    def edit_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_xpath('//img[@title="Edit"]').click()
+        wd.find_elements_by_xpath('//img[@title="Edit"]')[index].click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
@@ -86,8 +86,9 @@ class ContactHelper:
             self.open_home_page()
             self.contact_cache=[]
             for element in wd.find_elements_by_name("entry"):
-                lastname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[2]").text
-                firstname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[3]").text
+                for i in range(len(wd.find_elements_by_name("entry"))):
+                    lastname = element.find_element_by_xpath("td[2]").text
+                    firstname = element.find_element_by_xpath("td[3]").text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return list(self.contact_cache)
