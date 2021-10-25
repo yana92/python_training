@@ -1,5 +1,8 @@
 from model.contact import Contact
 import re
+from random import randrange
+
+
 #Осталось реализовать выбор рандомного контакта
 
 def test_contacts_info_on_home_page(app):
@@ -7,8 +10,10 @@ def test_contacts_info_on_home_page(app):
         app.contact.create_contact(Contact(lastname="Test Lastname", firstname="Firstname", address="Test addres",
                                            home_phone="+74951111111", mobile="+79999999999", work_phone="Test Work",
                                            email="Test email", phone2="Home"))
-    contact_from_home_page = app.contact.get_contact_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    list = app.contact.get_contact_list()
+    index = randrange(len(list))
+    contact_from_home_page = app.contact.get_contact_list()[index]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_home_page.lastname == contact_from_edit_page.lastname
     assert contact_from_home_page.firstname == contact_from_edit_page.firstname
     assert contact_from_home_page.address == contact_from_edit_page.address
