@@ -55,6 +55,17 @@ class ContactHelper:
         self.open_home_page()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        #wd.find_elements_by_name("selected[]")[id].click()
+        wd.find_element_by_xpath("//input[@id='%s']" % id).click()
+        wd.find_element_by_xpath('//input[@value="Delete"]').click()
+        wd.switch_to_alert().accept()
+        #        self.waiting_contacts_table()
+        self.open_home_page()
+        self.contact_cache = None
+
     def waiting_contacts_table(self):
         wd = self.app.wd
         wd.find_element_by_id("maintable")
@@ -69,16 +80,29 @@ class ContactHelper:
         self.open_home_page()
         wd.find_elements_by_xpath('//img[@title="Edit"]')[index].click()
 
+    def open_edit_form_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        #wd.find_elements_by_xpath('//img[@title="Edit"]')[id].click()
+        wd.find_element_by_xpath("//input[@id='%s']/../..//img[@title='Edit']" % id).click()
+
     def open_view_page_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath('//img[@title="Details"]').click()
 
-
-
     def edit_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_edit_form_by_index(index)
+        self.fill_contact_form(new_contact_data)
+        wd.find_element_by_name("update").click()
+        wd.find_element_by_link_text("home page").click()
+        self.waiting_contacts_table()
+        self.contact_cache = None
+
+    def edit_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.open_edit_form_by_id(id)
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
