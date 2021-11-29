@@ -7,11 +7,13 @@ def test_edit_contacts_name(app, db, check_ui):
         app.contact.create_contact(Contact(lastname="Test"))
     old_contacts = db.get_contact_list()
     contact = random.choice(old_contacts)
+    contact_index = old_contacts.index(contact)
     chanched_contact = Contact(lastname="New lastname", firstname="New firstname")
-    #contact.id = old_contacts.id
+    old_contacts[contact_index] = chanched_contact
     app.contact.edit_contact_by_id(contact.id, chanched_contact)
     new_contacts = db.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
+    assert old_contacts == new_contacts
     if check_ui:
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 

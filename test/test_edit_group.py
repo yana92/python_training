@@ -7,10 +7,13 @@ def test_edit_group_name(app, db, check_ui):
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
+    group_index = old_groups.index(group)
     chanched_group = Group(name="New name")
+    old_groups[group_index] = chanched_group
     app.group.edit_group_by_id(group.id, chanched_group)
     new_groups = db.get_group_list()
     assert len(old_groups) == len(new_groups)
+    assert old_groups == new_groups
     if check_ui:
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 

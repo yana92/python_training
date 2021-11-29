@@ -45,6 +45,11 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_xpath("//input[@id='%s']" % id).click()
+
     def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
@@ -57,12 +62,9 @@ class ContactHelper:
 
     def delete_contact_by_id(self, id):
         wd = self.app.wd
-        self.open_home_page()
-        #wd.find_elements_by_name("selected[]")[id].click()
-        wd.find_element_by_xpath("//input[@id='%s']" % id).click()
+        self.select_contact_by_id()
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
-        #        self.waiting_contacts_table()
         self.open_home_page()
         self.contact_cache = None
 
