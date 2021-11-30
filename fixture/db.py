@@ -1,6 +1,7 @@
 import pymysql.connections
 from model.group import Group
 from model.contact import Contact
+from model.address_in_groups import AddressInGroups
 
 
 class DbFixture:
@@ -41,6 +42,22 @@ class DbFixture:
                 list.append(Contact(id=str(id), firstname=firstname, lastname=lastname,
                                     address=address, home_phone=home_phone, mobile=mobile, work_phone=work_phone, phone2=phone2,
                                     email=email, email2=email2, email3=email3))
+        finally:
+            cursor.close()
+        return list
+
+    def get_address_in_groups(self):
+        list=[]
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("SELECT address_in_groups.id, group_id "
+                           "FROM address_in_groups "
+                           "INNER JOIN addressbook "
+                           "ON address_in_groups.id = addressbook.id "
+                           "WHERE addressbook.deprecated = '0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, group_id) = row
+                list.append(AddressInGroups(id=str(id), group_id=str(group_id)))
         finally:
             cursor.close()
         return list

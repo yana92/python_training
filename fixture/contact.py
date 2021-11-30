@@ -51,10 +51,14 @@ class ContactHelper:
         self.open_home_page()
         wd.find_element_by_xpath("//input[@id='%s']" % id).click()
 
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_elements_by_name("selected[]")[index].click()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath('//input[@value="Delete"]').click()
         wd.switch_to_alert().accept()
 #        self.waiting_contacts_table()
@@ -175,7 +179,12 @@ class ContactHelper:
             "#content > form:nth-child(10) > div.right > select > option[value='%s']" % group_id
         ).click()
         #wd.find_element_by_xpath('//select[@name="to_group"]/option[%s]' % index).click()
+        self.click_add_contact_to_group()
+
+    def click_add_contact_to_group(self):
+        wd = self.app.wd
         wd.find_element_by_name("add").click()
+        self.open_home_page()
         time.sleep(2)
 
     def get_group_from_group_list_on_home_page_by_id(self, id):
@@ -189,3 +198,13 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         return wd.find_elements_by_xpath('//select[@name="to_group"]/option')
+
+    def delete_contact_from_group(self, group_id, index):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_xpath('//select[@name="group"]').click()
+        wd.find_element_by_css_selector(
+            "#right > select > option[value='%s']" % group_id).click()
+        self.select_contact_by_index(index)
+        wd.find_element_by_name("remove").click()
+

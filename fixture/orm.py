@@ -37,7 +37,6 @@ class ORMFixture:
             return Group(id=str(group.id), name=group.name, header=group.header, footer=group.footer)
         return list(map(convert, groups))
 
-
     @db_session
     def get_group_list(self):
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
@@ -66,4 +65,4 @@ class ORMFixture:
     def get_groups_without_contacts(self, contact):
         orm_contact = list(select(a for a in ORMFixture.ORMContact if a.id == contact.id))[0]
         return self.convert_groups_to_model(
-            select(g for g in ORMFixture.ORMGroup if orm_contact not in g.contacts))
+            select(g for g in ORMFixture.ORMGroup if orm_contact not in g.contact))
