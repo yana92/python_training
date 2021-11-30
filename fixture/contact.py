@@ -1,4 +1,5 @@
 from model.contact import Contact
+import time
 import re
 
 
@@ -164,3 +165,27 @@ class ContactHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile=mobile, phone2=phone2)
+
+    def add_contact_to_group(self, id, group_id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        wd.find_element_by_name("to_group").click()
+        wd.find_elements_by_xpath('//select[@name="to_group"]/option')
+        wd.find_element_by_css_selector(
+            "#content > form:nth-child(10) > div.right > select > option[value='%s']" % group_id
+        ).click()
+        #wd.find_element_by_xpath('//select[@name="to_group"]/option[%s]' % index).click()
+        wd.find_element_by_name("add").click()
+        time.sleep(2)
+
+    def get_group_from_group_list_on_home_page_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        return wd.find_element_by_css_selector(
+            "#content > form:nth-child(10) > div.right > select > option[value='%s']" % id)
+        #return wd.find_element_by_xpath(            '//select[@name="to_group"]/option[%s]' % index).get_attribute("value")
+
+    def get_groups_list_on_home_page(self):
+        wd = self.app.wd
+        self.open_home_page()
+        return wd.find_elements_by_xpath('//select[@name="to_group"]/option')
