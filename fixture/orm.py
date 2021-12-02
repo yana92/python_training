@@ -59,10 +59,10 @@ class ORMFixture:
     def get_contacts_not_in_group(self, group):
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
         return self.convert_contacts_to_model(
-            select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.group))
+            select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
 
     @db_session
     def get_groups_without_contacts(self, contact):
-        orm_contact = list(select(a for a in ORMFixture.ORMContact if a.id == contact.id))[0]
+        orm_contact = list(select(c for c in ORMFixture.ORMContact if c.id == contact.id))[0]
         return self.convert_groups_to_model(
-            select(g for g in ORMFixture.ORMGroup if orm_contact not in g.contact))
+            select(g for g in ORMFixture.ORMGroup if orm_contact not in g.contacts))
